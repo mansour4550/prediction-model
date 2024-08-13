@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Data Analysis Results</title>
+  </head>
+  <body>
+    <h1>Data Analysis Results</h1>
+
+    <!-- Form for uploading file and submitting to Flask endpoints -->
+    <form action="/clean-data" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".xls,.xlsx" />
+      <button type="submit">Upload and Clean Data</button>
+    </form>
+
+    <!-- Display cleaned data and plots -->
+    <div id="cleaned-data">
+      <!-- JavaScript to populate cleaned data and plots -->
+    <!-- JavaScript to handle AJAX requests and update the page with Flask API responses -->
+    <script>
+      // Example AJAX request to populate cleaned data and plots
+      fetch("/clean-data", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Example: Display cleaned data columns
+          let cleanedDataDiv = document.getElementById("cleaned-data");
+          cleanedDataDiv.innerHTML = "<h2>Cleaned Data Columns:</h2>";
+          data.cleaned_data_columns.forEach((col) => {
+            cleanedDataDiv.innerHTML += `<p>${col}</p>`;
+          });
+
+          // Example: Display plots
+          data.plots.forEach((plot) => {
+            cleanedDataDiv.innerHTML += `<h3>${plot.product}</h3>`;
+            cleanedDataDiv.innerHTML += `<img src="${plot.plot_url}" alt="Box Plot">`;
+          });
+        })
+        .catch((error) => console.error("Error:", error));
+
+      // Repeat similar fetch requests for skewed-data and stationarity-check endpoints
+    </script>
+  </body>
+</html>

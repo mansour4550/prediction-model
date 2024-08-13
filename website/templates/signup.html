@@ -1,0 +1,73 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}
+<form id="signup-form">
+  <h3 align="center">Sign Up</h3>
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="Enter Email"
+      required
+    />
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      class="form-control"
+      placeholder="Enter Username"
+      required
+    />
+    <label for="password1">Password</label>
+    <input
+      type="password"
+      id="password1"
+      name="password1"
+      class="form-control"
+      placeholder="Enter Password"
+      required
+    />
+    <label for="password2">Confirm Password</label>
+    <input
+      type="password"
+      id="password2"
+      name="password2"
+      class="form-control"
+      placeholder="Confirm Password"
+      required
+    />
+    <br />
+    <div align="center">
+      <button class="btn btn-primary" type="submit" onclick="signUp(event)">
+        Sign Up
+      </button>
+    </div>
+  </div>
+</form>
+
+<script>
+  function signUp(event) {
+    event.preventDefault(); // Prevent form submission
+    const form = document.getElementById("signup-form");
+    const formData = new FormData(form);
+
+    fetch("/sign-up", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error); // Display error message in a popup
+        } else {
+          alert(data.message); // Display success message in a popup
+          window.location.href = "/login"; // Redirect to login page on success
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+</script>
+{% endblock %}
